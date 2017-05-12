@@ -4,6 +4,7 @@ let gameState = {
 
     preload: function () {
         game.load.image('background', 'assets/background.png');
+        game.load.image('background2', 'assets/background2.png');
         game.load.spritesheet('player', 'assets/player/player.png', 500, 500, 2);
         game.load.spritesheet('enemy1', 'assets/enemies-06.png', 500, 800, 2);
         game.load.spritesheet('enemy2', 'assets/enemies-07.png', 500, 800, 2);
@@ -22,9 +23,11 @@ let gameState = {
         game.scale.pageAlignVertically = true;
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
-
+        this.background2 = game.add.sprite(0, 0, 'background2');
+        this.background2.scale.setTo(0.32);
         this.background = game.add.sprite(0, 0, 'background');
         this.background.scale.setTo(0.32);
+
 
         this.enemies = game.add.group();
         this.timer = game.time.events.loop(1500, this.addEnemy, this);
