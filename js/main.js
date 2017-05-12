@@ -7,7 +7,9 @@ var mainState = {
     preload: function () {
         game.stage.backgroundColor = '#71c5cf';
 
-        game.load.image('player', 'assets/player/000.png');
+      //  game.load.image('player', 'assets/player/000.png');
+        game.load.atlasJSONHash('player', 'assets/player/000.png', 'assets/player/player.json');
+
         game.load.image('enemy', 'assets/arvore_enemy.gif');
     },
 
@@ -26,6 +28,9 @@ var mainState = {
         this.timer = game.time.events.loop(1500, this.addEnemy, this);
 
         this.player = game.add.sprite(100, 245, 'player');
+        this.player.animations.add('run');
+        this.player.animations.play('run', 15, true);
+        
         game.physics.arcade.enable(this.player);
         this.player.body.gravity.y = 1000;
         this.player.anchor.setTo(-0.2, 0.5);
