@@ -2,14 +2,18 @@
 
 let menuState = {
 	preload: function () {
-		game.stage.backgroundColor = '#71c5cf';
+		game.load.image('background', 'assets/background.png');
 	},
 
 
 	create: function () {
 		game.scale.pageAlignHorizontally = true;
 		game.scale.pageAlignVertically = true;
-		let btStart = game.add.text(400, 300, "Menu Principal", {
+
+		this.background = game.add.sprite(0, 0, 'background');
+        this.background.scale.setTo(0.32);
+
+		let btStart = game.add.text(400, 300, "Start", {
 			fill: "#ffffff"
 		});
 		btStart.inputEnabled = true;

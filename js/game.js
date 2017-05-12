@@ -2,12 +2,13 @@
 
 let gameState = {
 
-    preload: () => {
-        game.stage.backgroundColor = '#71c5cf';
-
-        //  game.load.image('player', 'assets/player/000.png');
+    preload: function () {
+        game.load.image('background', 'assets/background.png');
         game.load.spritesheet('player', 'assets/player/player.png', 500, 500, 2);
-        game.load.spritesheet('enemy', 'assets/enemies-07.png', 500, 800, 2);
+        game.load.spritesheet('enemy1', 'assets/enemies-06.png', 500, 800, 2);
+        game.load.spritesheet('enemy2', 'assets/enemies-07.png', 500, 800, 2);
+        game.load.spritesheet('enemy3', 'assets/enemies-08.png', 400, 400, 2);
+        this.arrEnemy = ["enemy1", "enemy2", "enemy3"];
 
     },
 
@@ -21,6 +22,9 @@ let gameState = {
         game.scale.pageAlignVertically = true;
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
+
+        this.background = game.add.sprite(0, 0, 'background');
+        this.background.scale.setTo(0.32);
 
         this.enemies = game.add.group();
         this.timer = game.time.events.loop(1500, this.addEnemy, this);
@@ -78,16 +82,18 @@ let gameState = {
     addEnemy: function () {
         let x = 1280;
         let y = 550;
-        this.enemy = game.add.sprite(x, y, 'enemy');
-        this.enemy.scale.setTo(0.2);
-        this.enemy.animations.add('run');
-        this.enemy.animations.play('run', 2, true);
-        this.enemies.add(this.enemy);
-        game.physics.arcade.enable(this.enemy);
+        let en = this.arrEnemy[Math.floor(Math.random() * this.arrEnemy.length)];
+        console.log(en);
+        let enemy = game.add.sprite(x, y,en );
+        enemy.scale.setTo(0.2);
+        enemy.animations.add('run');
+        enemy.animations.play('run', 2, true);
+        game.physics.arcade.enable(enemy);
+        enemy.body.velocity.x = -200;
+        enemy.checkWorldBounds = true;
+        enemy.outOfBoundsKill = true;
+        this.enemies.add(enemy);
 
-        this.enemy.body.velocity.x = -200;
-        this.enemy.checkWorldBounds = true;
-        this.enemy.outOfBoundsKill = true;
     }
 };
 
