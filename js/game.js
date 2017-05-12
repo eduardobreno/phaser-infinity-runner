@@ -2,13 +2,13 @@
 
 let gameState = {
 
-    preload: ()=> {
+    preload: () => {
         game.stage.backgroundColor = '#71c5cf';
 
-      //  game.load.image('player', 'assets/player/000.png');
-        game.load.atlasJSONHash('player', 'assets/player/000.png', 'assets/player/player.json');
+        //  game.load.image('player', 'assets/player/000.png');
+        game.load.spritesheet('player', 'assets/player/player.png', 500, 500, 2);
+        game.load.spritesheet('enemy', 'assets/enemies-07.png', 500, 800, 2);
 
-        game.load.image('enemy', 'assets/arvore_enemy.gif');
     },
 
     create: function () {
@@ -26,12 +26,13 @@ let gameState = {
         this.timer = game.time.events.loop(1500, this.addEnemy, this);
 
         this.player = game.add.sprite(100, 245, 'player');
+        this.player.scale.setTo(0.2);
         this.player.animations.add('run');
-        this.player.animations.play('run', 15, true);
-        
+        this.player.animations.play('run', 5, true);
+
         game.physics.arcade.enable(this.player);
         this.player.body.gravity.y = 1000;
-        this.player.anchor.setTo(-0.2, 0.5);
+        this.player.anchor.setTo(0.5, 0.5);
 
         let spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         spaceKey.onDown.add(this.jump, this);
@@ -39,6 +40,8 @@ let gameState = {
 
         this.score = 0;
         this.labelScore = game.add.text(20, 20, "0", { font: "30px Arial", fill: "#ffffff" });
+        game.time.events.loop(1000, () => { this.labelScore.text = this.score++; }, this);
+
     },
 
     update: function () {
@@ -62,7 +65,7 @@ let gameState = {
             return;
         this.player.alive = false;
         game.time.events.remove(this.timer);
-        
+
         this.enemies.forEach(function (p) {
             p.body.velocity.x = 0;
         }, this);
@@ -74,15 +77,17 @@ let gameState = {
 
     addEnemy: function () {
         let x = 1280;
-        let y = 380;
-        let enemy = game.add.sprite(x, y, 'enemy');
-        enemy.scale.setTo(0.5);
-        this.enemies.add(enemy);
-        game.physics.arcade.enable(enemy);
+        let y = 550;
+        this.enemy = game.add.sprite(x, y, 'enemy');
+        this.enemy.scale.setTo(0.2);
+        this.enemy.animations.add('run');
+        this.enemy.animations.play('run', 2, true);
+        this.enemies.add(this.enemy);
+        game.physics.arcade.enable(this.enemy);
 
-        enemy.body.velocity.x = -200;
-        enemy.checkWorldBounds = true;
-        enemy.outOfBoundsKill = true;
+        this.enemy.body.velocity.x = -200;
+        this.enemy.checkWorldBounds = true;
+        this.enemy.outOfBoundsKill = true;
     }
 };
 
