@@ -6,6 +6,7 @@ let gameState = {
         game.load.image('background', 'assets/background.png');
         game.load.image('background2', 'assets/background2.png');
         game.load.spritesheet('player', 'assets/player/player.png', 500, 500, 2);
+        game.load.spritesheet('player', 'assets/player/player-dead.png', 500, 500, 3);
         game.load.spritesheet('enemy1', 'assets/enemies-06.png', 500, 800, 2);
         game.load.spritesheet('enemy2', 'assets/enemies-07.png', 500, 800, 2);
         game.load.spritesheet('enemy3', 'assets/enemies-08.png', 400, 400, 2);
@@ -84,9 +85,10 @@ let gameState = {
 
     addEnemy: function () {
         let x = 1280;
-        let y = 550;
+        let yArr = [550,300,200];
         let en = this.arrEnemy[Math.floor(Math.random() * this.arrEnemy.length)];
-        console.log(en);
+        let y = yArr[Math.floor(Math.random() * yArr.length)];
+
         let enemy = game.add.sprite(x, y,en );
         enemy.scale.setTo(0.2);
         enemy.animations.add('run');
