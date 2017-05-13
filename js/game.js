@@ -15,11 +15,6 @@ let gameState = {
     },
 
     create: function () {
-        if (!game.device.desktop) {
-            game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-            game.scale.setMinMax(game.width / 2, game.height / 2, game.width, game.height);
-        }
-
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
 
@@ -58,8 +53,6 @@ let gameState = {
         if (this.player.y < 0 || this.player.y > game.world.height)
             this.restartGame();
 
-        if (this.player.angle < 20)
-            this.player.angle += 1;
     },
 
     jump: function () {
